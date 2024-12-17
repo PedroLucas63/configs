@@ -1,0 +1,18 @@
+[Unit]
+Description=Montar como sistema de arquivos
+After=rclone-sync.service
+Requires=rclone-sync.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone mount <REMOTO>:/<PASTA> <DIRETORIO_PARA_SALVAR> --vfs-cache-mode=full --all
+Restart=on-failure
+User=<user>
+Group=<user>
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+

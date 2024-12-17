@@ -1,0 +1,19 @@
+[Unit]
+Description=Sincronizar com diretório local
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone sync <REMOTO>:/<PASTA> <DIRETÓRIO_PARA_SALVAR>
+User=<user>
+Group=<user>
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+
+
