@@ -95,7 +95,10 @@ FLATPAK_APPS=(
     "com.heroicgameslauncher.hgl"            # Heroic Games Launcher
     "com.valvesoftware.Steam"                # Steam
     "net.pcsx2.PCSX2"                        # PCSX2
-    "com.github.AmatCoder.mednaffe"      	 # Mednaffe
+    "com.github.AmatCoder.mednaffe"          # Mednaffe
+    "com.google.Chrome" 		     # Chrome
+    "com.visualstudio.code" 		     # Visual Studio Code
+    "org.keepassxc.KeePassXC"		     # KeePassXC
 )
 
 for app in "${FLATPAK_APPS[@]}"; do
@@ -106,6 +109,16 @@ for app in "${FLATPAK_APPS[@]}"; do
         print_warning "Flatpak $app já está instalado. Pulando."
     fi
 done
+
+print_message "Instalando pacotes externos..."
+FDM_URL="https://files2.freedownloadmanager.org/6/latest/freedownloadmanager.deb"
+FDM_ARQUIVO="/tmp/freedownloadmanager.deb"
+
+wget -O $FDM_ARQUIVO $FDM_URL
+sudo dpkg -i $FDM_ARQUIVO
+sudo apt-get install -f
+
+rm $FDM_ARQUIVO
 
 # Configuração do UFW
 print_message "Configurando UFW..."
