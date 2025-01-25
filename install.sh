@@ -28,7 +28,7 @@ sudo apt update && sudo apt upgrade -y
 
 
 print_message "Instalando pacotes essenciais..."
-sudo apt install -y curl wget build-essential software-properties-common
+sudo apt install -y git curl wget build-essential software-properties-common
 
 # Instalando homebrew
 print_message "Instalando o Homebrew..."
@@ -65,22 +65,29 @@ sudo apt install -y docker.io postgresql ufw gufw rclone
 # Instalação de pacotes via Homebrew
 print_message "Instalando pacotes via Homebrew..."
 if command -v brew &> /dev/null; then
-    brew install htop fish oh-my-posh lf llvm openjdk python nvm mednafen zoxide doxygen
+    brew install htop
+    brew install fish fisher
+    brew install oh-my-posh lf zoxide
+    brew install llvm 
+    brew install openjdk 
+    brew install python 
+    brew install nvm doxygen
+    brew install mednafen
 else
     print_error "Homebrew não encontrado. Pulando instalação via Homebrew."
 fi
 
 # Configurando o Node.js LTS, nvm e pnpm
 print_message "Instalando Node.js LTS, NVM e PNPM..."
-nvm install --lts
-nvm use --lts
+nvm install lts
+nvm use lts
 npm install -g pnpm
 
 # Configurando pacotes Flatpak
 print_message "Instalando aplicativos via Flatpak..."
 FLATPAK_APPS=(
-    "com.github.johnfactotum.GearLever"      # GearLever
-    "com.github.rvs123.whaler"               # Whaler
+    "it.mijorus.gearlever"      	     # GearLever
+    "com.github.sdv43.whaler"                # Whaler
     "com.usebottles.bottles"                 # Bottles
     "org.gnome.Boxes"                        # Boxes
     "io.dbeaver.DBeaverCommunity"            # DBeaver
@@ -88,7 +95,7 @@ FLATPAK_APPS=(
     "com.heroicgameslauncher.hgl"            # Heroic Games Launcher
     "com.valvesoftware.Steam"                # Steam
     "net.pcsx2.PCSX2"                        # PCSX2
-	"com.github.AmatCoder.mednaffe"      	 # Mednaffe
+    "com.github.AmatCoder.mednaffe"      	 # Mednaffe
 )
 
 for app in "${FLATPAK_APPS[@]}"; do
@@ -225,6 +232,8 @@ source ~/.config/fish/aliases.fish
 set -x CLANG_FORMAT_FILE ~/.config/clang/.clang-format
 EOF
 
+fisher install jorgebucaran/nvm.fish
+
 # Copiando arquivos de configuração
 echo "Copiando arquivos de configuração do Fish..."
 cp "$REPO_DIR/fish/aliases.fish" "$FISH_CONFIG_DIR/"
@@ -240,6 +249,11 @@ echo "Copiando arquivos de configuração do lf..."
 cp -r "$REPO_DIR/lf/"* "$LF_CONFIG_DIR/"
 
 echo "Configurações e cópias concluídas!"
+
+# Definindo utilização do fish
+echo "Configurações adicionais do fish..."
+chsh -s $(which fish)
+fish
 
 # Finalização
 print_message "Instalação e configuração concluídas com sucesso!"
