@@ -78,10 +78,9 @@ else
 fi
 
 # Configurando o Node.js LTS, nvm e pnpm
-print_message "Instalando Node.js LTS, NVM e PNPM..."
+print_message "Instalando Node.js LTS e NVM..."
 nvm install lts
 nvm use lts
-npm install -g pnpm
 
 # Configurando pacotes Flatpak
 print_message "Instalando aplicativos via Flatpak..."
@@ -243,6 +242,7 @@ source ~/.config/fish/aliases.fish
 
 # Variables
 set -x CLANG_FORMAT_FILE ~/.config/clang/.clang-format
+set --universal nvm_default_version lts
 EOF
 
 fisher install jorgebucaran/nvm.fish
